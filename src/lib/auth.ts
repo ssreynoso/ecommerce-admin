@@ -10,7 +10,7 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 export const config = {
     providers: [
         CredentialsProvider({
-            id: 'credentials',
+            id: 'login',
             name: 'credentials',
             credentials: {
                 username: { label: 'Username', type: 'text', placeholder: 'Ingrese usuario' },
@@ -37,13 +37,41 @@ export const config = {
                 return user as any
             },
         }),
+        CredentialsProvider({
+            id: 'registration',
+            name: 'credentials',
+            credentials: {
+                username: { label: 'Username', type: 'text', placeholder: 'Ingrese usuario' },
+                password: { label: 'Password', type: 'password' },
+            },
+            async authorize(credentials) {
+                // Esto es lo que se ejecuta cuando se hace login
+                // Se evalúan las credenciales de la manera que se quiera
+                // Si esta todo ok se retorna un nuevo usuario. Si no, se lanza un error
+
+                const user = {
+                    ...credentials,
+                    name: 'Alberto',
+                    surname: 'Fernandez',
+                }
+
+                delete user.password
+
+                // if (error) {
+                //     throw new Error('Error al iniciar sesión, el usuario o contraseña son incorrectos')
+                // }
+
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                return user as any
+            },
+        }),
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID || '',
             clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
         }),
     ],
     pages: {
-        signIn: '/login',
+        signIn: '/sign-in',
     },
     session: {
         strategy: 'jwt',

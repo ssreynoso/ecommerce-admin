@@ -17,7 +17,7 @@ export const useProviders = () => {
         }
 
         fetchProviders()
-    })
+    }, [])
 
     return providers
 }

@@ -15,6 +15,8 @@ import { EyeClosedIcon, EyeOpenIcon } from '@radix-ui/react-icons'
 import { useProviders } from '@/hooks/use-providers'
 import { ProviderButton } from '@/components/auth/provider-button'
 import { Skeleton } from '@/components/ui/skeleton'
+import { Separator } from '@/components/ui/separator'
+import Link from 'next/link'
 // import LoadingAnimation from '@/assets/lottie/login-loading.json'
 // import { Lottie } from '@/components/lottie'
 
@@ -50,7 +52,7 @@ const FormComponent = ({ loading, setLoading }: Props) => {
         const password = values.password
 
         try {
-            const signInResponse = await signIn('credentials', {
+            const signInResponse = await signIn('registration', {
                 email,
                 password,
                 redirect: false,
@@ -119,7 +121,7 @@ const FormComponent = ({ loading, setLoading }: Props) => {
 
                         return (
                             <FormItem>
-                                <FormLabel>Contraseña</FormLabel>
+                                <FormLabel>Password</FormLabel>
                                 <FormControl>
                                     <div className='relative'>
                                         <Input
@@ -151,7 +153,7 @@ const FormComponent = ({ loading, setLoading }: Props) => {
                     type      = 'submit'
                     disabled  = { loading }
                 >
-                    Iniciar sesión
+                    Login
                 </Button>
             </form>
         </Form>
@@ -169,19 +171,32 @@ export const LoginPage = () => {
                 <CardHeader className='flex items-center'>
                     <CardTitle className='text-xl w-full'>Sign in</CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className='relative flex flex-col gap-4'>
                     <FormComponent loading={loading} setLoading={setLoading} />
-                    <div className='flex flex-col gap-4 mt-4'>
-                        { providers ? (
-                            providers.map((provider) => (
-                                <ProviderButton key={provider.id} provider={provider} />
-                            ))
-                        ) : (
-                            <>
-                                <Skeleton className='w-full h-10' />
-                                <Skeleton className='w-full h-10' />
-                            </>
-                        )}
+                    <div className='flex items-center justify-center gap-2 w-full relative h-2'>
+                        <Separator className='w-1/2'/>
+                        <span className='text-secondary'>O</span>
+                        <Separator className='w-1/2'/>
+                    </div>
+                    <div>
+                        <div className='flex flex-col gap-4'>
+                            { providers ? (
+                                providers.map((provider) => (
+                                    <ProviderButton key={provider.id} provider={provider} />
+                                ))
+                            ) : (
+                                <>
+                                    <Skeleton className='w-full h-10' />
+                                    <Skeleton className='w-full h-10' />
+                                </>
+                            )}
+                        </div>
+                        <div className='flex gap-2 items-center'>
+                            <span className='text-sm text-muted-foreground'>No account?</span>
+                            <Button variant='link' className='p-0 text-sm text-blue-500'>
+                                <Link href='/sign-up'>Sign up</Link>
+                            </Button>
+                        </div>
                     </div>
                 </CardContent>
             </Card>

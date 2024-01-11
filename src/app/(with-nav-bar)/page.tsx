@@ -1,7 +1,19 @@
-const Home = () => {    
+'use client'
+import { useStoreModal } from '@/hooks/use-store-modal'
+import { useEffect } from 'react'
+ 
+const Home = () => {
+    const { isOpen, onOpen } = useStoreModal()
+
+    useEffect(() => {
+        if (!isOpen) {
+            onOpen()
+        }
+    }, [isOpen, onOpen])
+
     return (
-        <div className='w-full h-screen-nav-bar bg-background flex justify-center items-center'>
-            <h1 className='text-4xl'>Hola bro</h1>
+        <div className="w-full h-screen-nav-bar bg-background flex justify-center items-center">
+            <h1 className="text-4xl">Hola bro</h1>
         </div>
     )
 }

@@ -22,6 +22,6 @@ export const config = {
         // - _next/image
         // - favicon.ico
         // '/dashboard/:path*',
-        '/((?!login|api|_next/static|_next/image|favicon.ico).*)',
+        '/((?!sign-in|sign-up|api|_next/static|_next/image|favicon.ico).*)',
     ],
 }

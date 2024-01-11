@@ -6,15 +6,16 @@ import Image from 'next/image'
 import React from 'react'
 
 type Props = {
-    provider: ClientSafeProvider
+    provider:    ClientSafeProvider
+    buttonText?: (provider: ClientSafeProvider) => string
 }
 
-export const ProviderButton = ({ provider }: Props) => {
+export const ProviderButton = ({ provider, buttonText }: Props) => {
     if (provider.id === 'google') {
         return (
             <Button onClick={() => signIn(provider.id)} className='flex gap-4 w-full'>
                 <Image src='https://authjs.dev/img/providers/google.svg' width={20} height={20} alt='Google' />
-                Sign in with {provider.name}
+                { buttonText ? buttonText(provider) : `Sign in with ${provider.name}`}
             </Button>
         )
     }
