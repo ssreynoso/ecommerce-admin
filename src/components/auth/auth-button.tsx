@@ -1,7 +1,7 @@
 'use client'
 
 import { signIn, signOut, useSession } from 'next-auth/react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button, buttonVariants } from '@/components/ui/button'
 import {
@@ -21,6 +21,10 @@ export const AuthButton = () => {
     const user      = session.data?.user
     const userImage = user?.image || ''
     const userName  = user?.name || ''
+
+    useEffect(() => {
+        console.log(session)
+    }, [session])
 
     return (
         <>

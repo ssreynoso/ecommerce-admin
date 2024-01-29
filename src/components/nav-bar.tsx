@@ -56,8 +56,8 @@ export const NavBar = () => {
         >
             <div className="w-full h-full mx-auto max-w-7xl flex justify-center items-center relative">
                 {/* <Image src={Logo} alt='Logo' className='h-2/3 max-h-10 w-max absolute left-0' /> */}
-                <NavOptions options={navOptions}/>
-                <DropdownNavbarMenu options={navOptions} className='xl:hidden'/>
+                {/* <NavOptions options={navOptions}/>
+                <DropdownNavbarMenu options={navOptions} className='xl:hidden'/> */}
                 <div className='absolute right-0 hidden xl:inline-flex gap-2'>
                     <AuthButton />
                     <ModeToggle />

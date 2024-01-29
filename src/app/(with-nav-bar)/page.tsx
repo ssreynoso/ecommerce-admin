@@ -3,7 +3,10 @@ import { useStoreModal } from '@/hooks/use-store-modal'
 import { useEffect } from 'react'
  
 const Home = () => {
-    const { isOpen, onOpen } = useStoreModal()
+    const { isOpen, onOpen } = useStoreModal((state) => ({
+        isOpen: state.isOpen,
+        onOpen: state.onOpen,
+    }))
 
     useEffect(() => {
         if (!isOpen) {

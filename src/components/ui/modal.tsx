@@ -25,8 +25,8 @@ export const Modal = (props: ModalProps) => {
                 <DialogHeader>
                     <DialogTitle>{title}</DialogTitle>
                     <DialogDescription>{description}</DialogDescription>
-
                 </DialogHeader>
+                {children}
             </DialogContent>
         </Dialog>
     )
