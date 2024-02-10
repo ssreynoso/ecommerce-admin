@@ -1,69 +1,34 @@
-'use client'
-
-import Link from 'next/link'
-// import Image from 'next/image'
-// import Logo from '@/assets/logo.png'
-import { useBoolean, useEventListener } from 'usehooks-ts'
-import { cn } from '@/lib/utils'
-import { Button } from './ui/button'
-// import { useMediaQueryXl } from '@/hooks/use-media-queries'
 import { ModeToggle } from '@/components/dark-mode-toggle-button'
-import { DropdownNavbarMenu } from '@/components/dropdown-navbar-menu'
-import { NavBarOption } from '@/types/utils'
 import { AuthButton } from './auth/auth-button'
-// import { ChangeTheme } from './change-theme'
+import { MainNav } from './main-nav'
+import { StoreSwitcher } from './store-switcher'
+import { NavBarDynamicBackground } from './nav-bar-dynamic-background'
+import { getServerSessionData } from '@/lib/server-session'
+import { redirect } from 'next/navigation'
+import prismadb from '@/lib/prismadb'
 
-const NavOptions = ({ options }: { options: NavBarOption[] }) => (
-    <ul className={cn('hidden xl:flex xl:flex-row xl:gap-5')}>
-        { options.map(op => (
-            <li key={op.value}>
-                <Button variant="link"> 
-                    <Link href={op.value}>{op.label}</Link>
-                </Button>
-            </li>
-        ))}
-    </ul>
-)
-
-
-export const NavBar = () => {
-    const { value: moved, setFalse: setMovedFalse, setTrue: setMovedTrue } = useBoolean(false)
-
-    const navOptions = [
-        { label: 'Home', value: '' },
-        { label: 'About', value: '#about' },
-        { label: 'Contact', value: '#contact' },
-        { label: 'Etc...', value: '#etc' },
-    ]
-
-    const onScroll = () => {
-        if (window.scrollY > 0) {
-            setMovedTrue()
-        } else {
-            setMovedFalse()
-        }
+export const NavBar = async () => {
+    const { authenticated, data } = await getServerSessionData()
+    if (!authenticated || !data.userId) {
+        redirect('/sign-in')
     }
-
-    useEventListener('scroll', onScroll)
+    const { userId } = data
+    const stores = await prismadb.store.findMany({
+        where: { userId },
+    })
 
     return (
-        <nav
-            className={cn(
-                'px-4 w-full h-nav-bar-height border-b border-b-transparent xl:px-0',
-                'transition-all fixed z-50 top-0 backdrop-blur-md',
-                moved && 'border-b-border'
-            )}
-        >
-            <div className="w-full h-full mx-auto max-w-7xl flex justify-center items-center relative">
+        <NavBarDynamicBackground>
+            <div className="container h-full flex items-center relative gap-8">
                 {/* <Image src={Logo} alt='Logo' className='h-2/3 max-h-10 w-max absolute left-0' /> */}
-                {/* <NavOptions options={navOptions}/>
-                <DropdownNavbarMenu options={navOptions} className='xl:hidden'/> */}
+                <StoreSwitcher items={stores} />
+                <MainNav/>
                 <div className='absolute right-0 hidden xl:inline-flex gap-2'>
                     <AuthButton />
                     <ModeToggle />
                 </div>
                 {/* <ChangeTheme /> */}
             </div>
-        </nav>
+        </NavBarDynamicBackground>
     )
 }

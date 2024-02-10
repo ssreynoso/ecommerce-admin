@@ -2,7 +2,7 @@ import { auth } from './auth'
 
 type Response =
       { authenticated: false, data: null }
-    | { authenticated: true , data: { id: string } }
+    | { authenticated: true , data: { userId: string } }
 
 export async function getServerSessionData(): Promise<Response> {
     const session = await auth()
@@ -12,6 +12,8 @@ export async function getServerSessionData(): Promise<Response> {
     const { id } = session.user as { id: string }
     return {
         authenticated: true,
-        data: { id },
+        data: {
+            userId: id
+        },
     }
 }

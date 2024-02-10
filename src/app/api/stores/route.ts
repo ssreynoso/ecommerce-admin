@@ -5,10 +5,10 @@ import { NextRequest, NextResponse } from 'next/server'
 export async function POST(request: NextRequest) {
     try {
         const { authenticated, data } = await getServerSessionData()
-        if (!authenticated || !data.id) {
+        if (!authenticated || !data.userId) {
             return new NextResponse('Unauthorized', { status: 401 })
         }
-        const { id } = data
+        const { userId } = data
 
         const body = await request.json()
         const { name } = body
@@ -16,14 +16,10 @@ export async function POST(request: NextRequest) {
             return new NextResponse('Missing name', { status: 400 })
         }
 
-        console.log('[STORES_POST] body: ', body)
-        console.log('[STORES_POST] id: ', id)
-        return new NextResponse('ADS', { status: 400 })
-
         const store = await prismadb.store.create({
             data: {
                 name,
-                userId: id,
+                userId,
             }
         })
 

@@ -1,9 +1,9 @@
 import { StoreModal } from '@/components/modals/store-modal'
-import { useIsRendered } from '@/hooks/use-is-rendered'
+import { useIsMounted } from '@/hooks/use-is-mounted'
 import React from 'react'
 
 export const ModalProvider = () => {
-    const isMounted = useIsRendered()
+    const isMounted = useIsMounted()
 
     if (!isMounted) {
         return null

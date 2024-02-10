@@ -52,7 +52,7 @@ const FormComponent = ({ loading, setLoading }: Props) => {
         const password = values.password
 
         try {
-            const signInResponse = await signIn('registration', {
+            const signInResponse = await signIn('login', {
                 email,
                 password,
                 redirect: false,

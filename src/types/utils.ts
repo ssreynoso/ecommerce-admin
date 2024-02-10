@@ -1,4 +1,4 @@
-export type NavBarOption = { label: string, value: string }
+export type NavBarOption = { label: string, value: string, active?: boolean }
 
 export type Prettify<T> = {
     [K in keyof T]: T[K]

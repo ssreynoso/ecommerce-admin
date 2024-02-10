@@ -80,8 +80,6 @@ export const config = {
         async signIn({ user, account, profile, email, credentials }) {
             // Utilizamos la callback signIn para validar si el usuario puede iniciar sesión.
             // Retorna true o false dependiendo si el usuario puede iniciar sesión o no.
-
-            console.log(account?.provider)
             // @ts-expect-error I want to use the provider, no matter that 'user' do not have that property.
             user.provider = account?.provider
 

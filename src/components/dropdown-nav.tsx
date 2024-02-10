@@ -17,7 +17,7 @@ import { useTheme } from 'next-themes'
 import { NavBarOption } from '@/types/utils'
 import { cn } from '@/lib/utils'
 
-export const DropdownNavbarMenu = ({ options, className }: { options: NavBarOption[], className: string }) => {
+export const DropdownNav = ({ options, className }: { options: NavBarOption[], className: string }) => {
     const { setTheme } = useTheme()
 
     return (
